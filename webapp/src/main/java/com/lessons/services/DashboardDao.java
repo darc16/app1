@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
@@ -21,6 +22,10 @@ public class DashboardDao
         logger.debug("DashboardDao() Constructor called");
     }
 
+    @PostConstruct
+    public void postConstruct() {
+        logger.debug("DashboardDao() Post Constructor called");
+    }
 
     public String getDatabaseTime()
     {
@@ -33,15 +38,5 @@ public class DashboardDao
         logger.debug("Database Time is {}", sDateTime);
 
         return sDateTime;
-    }
-
-    public String getReportInformation(int reportId) {
-
-        String sql = "Select * from reports where id = " + reportId;
-        JdbcTemplate jt = new JdbcTemplate(this.dataSource);
-        String reportInfo = jt.queryForObject(sql, String.class);
-        logger.debug("Database Time is {}", reportInfo);
-
-        return reportInfo;
     }
 }

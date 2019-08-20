@@ -113,6 +113,26 @@
             <version>2.9.3</version>
         </dependency>
 
+        <dependency>
+            <!-- Add the dependency for your postgreSQL JDBC driver -->
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.1.4</version>
+        </dependency>
+
+        <dependency>
+            <!-- Hikari Data Source / JDBC Connection Pool -->
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>1.17</version>
+        </dependency>
+
     </dependencies>
 
     <build>

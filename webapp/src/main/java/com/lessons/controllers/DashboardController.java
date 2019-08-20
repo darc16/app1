@@ -1,4 +1,5 @@
-package com.lessons;
+package com.lessons.controllers;
+
 
 import com.lessons.services.DashboardDao;
 import org.slf4j.Logger;
@@ -7,32 +8,38 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.websocket.server.PathParam;
 
-@Controller("com.lessons.ReportsController")
-public class ReportsController {
-    private static final Logger logger = LoggerFactory.getLogger(ReportsController.class);
+@Controller("com.lessons.controllers.DashboardController")
+public class DashboardController {
+    private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
     @Resource
     private DashboardDao dashboardDao;
 
+    public DashboardController(){
+        logger.debug("Dashboard Controller Constructor called");
+    }
 
-    /********************************************** ***************************
+    @PostConstruct
+    public void postConstruct() {
+        logger.debug("Dashboard Controller Post Constructor called");
+    }
+
+    /*************************************************************************
      * getDateTime()
      * @return JSON string that holds the date/time
      *************************************************************************/
-    @RequestMapping(value = "/api/reports/{reportId}", method = RequestMethod.GET, produces = "application/json")
-
-    public ResponseEntity<?> getDateTime(@PathVariable(name = "reportId") int reportId) {
+    @RequestMapping(value = "/api/dashboard/time", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> getDateTime() {
+        logger.debug("getDashboardDetails() started.");
 
         // Get the date/time from the database
-        String sDateTime = dashboardDao.getReportInformation(reportId);
+        String sDateTime = dashboardDao.getDatabaseTime();
 
         // Return the date/time string as plain-text
         return ResponseEntity
@@ -40,4 +47,7 @@ public class ReportsController {
                 .contentType(MediaType.TEXT_PLAIN)
                 .body(sDateTime);
     }
+
+
+
 }
