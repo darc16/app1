@@ -42,5 +42,7 @@ public class IndicatorsController {
                 .status(HttpStatus.OK)
                 .body("");
     }
+
+
 }
 

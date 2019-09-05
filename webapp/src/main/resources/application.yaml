@@ -20,5 +20,5 @@ network.name: NIPR
 
 jasypt:
   encryptor:
-  algorithm: PBEWithMD5AndDES
-  password: 'ab5823423464j1k2#><!!6298<-+'
+    algorithm: PBEWithMD5AndDES
+    password: 'ab5823423464j1k2#><!!6298<-+'

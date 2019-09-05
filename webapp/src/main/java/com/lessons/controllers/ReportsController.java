@@ -1,5 +1,6 @@
 package com.lessons.controllers;
 
+import com.lessons.filter.FilterService;
 import com.lessons.model.ShortReport;
 import com.lessons.services.DashboardDao;
 import com.lessons.services.ReportsDao;
@@ -24,6 +25,9 @@ public class ReportsController {
 
     @Resource
     private ReportsDao reportsDao;
+
+    @Resource
+    private FilterService filterService;
 
     private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
@@ -54,5 +58,23 @@ public class ReportsController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(shortReports);
+    }
+
+    @RequestMapping(value = "/api/reports/filtered", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> getFilteredReports(@RequestParam(name="filters", required=false) List<String> filters) {
+
+        logger.debug("filters {}", filters);
+
+        if(!filterService.areFiltersValid(filters)){
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Bad Request, invalid filters");
+        };
+
+        List<ShortReport> reports = reportsDao.getFilteredReports(filters);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(reports);
     }
 }

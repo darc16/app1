@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class IndicatorServiceTest {
         private static final Logger logger = LoggerFactory.getLogger(IndicatorServiceTest.class);
 

@@ -6,8 +6,6 @@ public class ShortReport {
 
     private Integer id;
     private String description;
-
-    @JsonProperty("description")
     private String displayName;
 
     public ShortReport(){};

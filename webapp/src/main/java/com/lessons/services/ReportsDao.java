@@ -1,5 +1,7 @@
 package com.lessons.services;
 
+import com.lessons.filter.FilterParams;
+import com.lessons.filter.FilterService;
 import com.lessons.model.ShortReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,9 @@ public class ReportsDao
 
     @Resource
     private DataSource dataSource;
+
+    @Resource
+    private FilterService filterService;
 
     public void approveReport(Integer id, Boolean approve)
     {
@@ -121,4 +126,26 @@ public class ReportsDao
         return shortReports;
     }
 
+    public List<ShortReport> getFilteredReports(List<String> filters) {
+        BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(ShortReport.class);
+
+        // get sql where clause and param map for query
+        FilterParams filterParams = filterService.getFilterParamsForFilters(filters);
+        String sql = "select id, description, display_name from reports";
+        String whereClause = filterParams.getSql();
+        List<ShortReport> shortReports;
+
+        // if a where clause is returned add it to the sql
+        if (whereClause != null) {
+            sql = sql + " where " + whereClause;
+            NamedParameterJdbcTemplate np = new NamedParameterJdbcTemplate(this.dataSource);
+            shortReports = np.query(sql, filterParams.getBindVars(), rowMapper);
+        } else {
+            JdbcTemplate jt = new JdbcTemplate(this.dataSource);
+            shortReports = jt.query(sql, rowMapper);
+        }
+
+        // return list of ShortReport DTO objects
+        return shortReports;
+    }
 }
