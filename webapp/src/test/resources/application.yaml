@@ -17,6 +17,10 @@ app.datasource:
 development.mode: TrUe
 network.name: NIPR
 
+
+hdfs.enabled: true
+show.classified.banner: true
+
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
@@ -26,26 +30,3 @@ jasypt:
 spring:
   profiles:
     active: dev
-
-
-
----
-#Dev Profile
-
-spring:
-  profiles: dev
-
-network.name: NIPR
-hdfs.enabled: false
-show.classified.banner: false
-
-
----
-#Test Profile
-
-spring:
-  profiles: test
-
-network.name: SIPR
-hdfs.enabled: true
-show.classified.banner: true

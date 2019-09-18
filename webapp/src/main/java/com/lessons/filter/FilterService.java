@@ -137,9 +137,8 @@ public class FilterService {
             }
             if (filterRules.getFilterOperation().equalsIgnoreCase("isnull") || filterRules.getFilterOperation().equalsIgnoreCase("isnotnull")){
                 whereClause = whereClause + " " + field + sqlTemplate + " AND ";
-
             } else {
-                whereClause = whereClause + " " + field + " " + String.format(sqlTemplate, ":bindVar" + bindVarNumber) + " AND ";
+                whereClause = whereClause + field + " " + String.format(sqlTemplate, ":bindVar" + bindVarNumber) + " AND ";
                 if(filterRules.getSqlOperation().equalsIgnoreCase("in") || filterRules.getSqlOperation().equalsIgnoreCase("notin")){
                     bindvars.put("bindVar" + bindVarNumber, parts.subList(2,parts.size()));
                 } else {
@@ -149,7 +148,7 @@ public class FilterService {
         }
 
         filterParams.setBindVars(bindvars);
-        filterParams.setSql(whereClause);
+        filterParams.setSql(whereClause.substring(0, whereClause.length() - 4));
 
         return filterParams;
     }

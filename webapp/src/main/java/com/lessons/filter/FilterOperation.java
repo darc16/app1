@@ -18,18 +18,18 @@ public enum FilterOperation {
 //     Fieldname <separator> ISNULL
 //     Fieldname <separator> ISNOTNULL
 
-    EQUALS("EQUALS","=", 3, " = %s"),
-    GREATER("GREATER", "",3, " > :%s::Integer"),
-    GREATER_EQUAL("GREATER_EQUAL", "=",3, " >= :%s::Integer"),
-    LESS("LESS", "=",3, " < :%s::Integer"),
-    LESS_EQUAL("LESS_EQUAL", "=",3, " <= :%s::Integer"),
-    BETWEEN("BETWEEN", "=",4, " BETWEEN %s AND %s"),
-    IN("IN", ">=",3, " IN (%s)"),
-    NOTIN("NOTIN", ">=",3, " NOT IN (%s)"),
-    CONTAINS("CONTAINS", "=",3, " LIKE % %s %"),
-    ICONTAINS("ICONTAINS", "=",3, " ILIKE % %s %"),
-    ISNULL("ISNULL", "=",2, " IS NULL"),
-    ISNOTNULL("ISNOTNULL", "=",2, " IS NOT NULL");
+    EQUALS("EQUALS","=", 3, "= %s"),
+    GREATER("GREATER", "",3, "> :%s::Integer"),
+    GREATER_EQUAL("GREATER_EQUAL", "=",3, ">= :%s::Integer"),
+    LESS("LESS", "=",3, "< :%s::Integer"),
+    LESS_EQUAL("LESS_EQUAL", "=",3, "<= :%s::Integer"),
+    BETWEEN("BETWEEN", "=",4, "BETWEEN %s AND %s"),
+    IN("IN", ">=",3, "IN (%s)"),
+    NOTIN("NOTIN", ">=",3, "NOT IN (%s)"),
+    CONTAINS("CONTAINS", "=",3, "LIKE % %s %"),
+    ICONTAINS("ICONTAINS", "=",3, "ILIKE % %s %"),
+    ISNULL("ISNULL", "=",2, "IS NULL"),
+    ISNOTNULL("ISNOTNULL", "=",2, "IS NOT NULL");
 
     private int tokenCount;
     private String compareOperation;

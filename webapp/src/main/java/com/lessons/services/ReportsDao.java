@@ -2,6 +2,7 @@ package com.lessons.services;
 
 import com.lessons.filter.FilterParams;
 import com.lessons.filter.FilterService;
+import com.lessons.model.ReportStats;
 import com.lessons.model.ShortReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +42,9 @@ public class ReportsDao
     @PostConstruct
     public void init(){
         logger.debug("Post Constructor started {}", developmentMode);
-        if(!networkName.equalsIgnoreCase("NIPR")){
-            throw new RuntimeException("network name is wrong, try again you passed in: " + networkName);
-        }
+//        if(!networkName.equalsIgnoreCase("NIPR")){
+//            throw new RuntimeException("network name is wrong, try again you passed in: " + networkName);
+//        }
     }
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsDao.class);
@@ -147,5 +148,18 @@ public class ReportsDao
 
         // return list of ShortReport DTO objects
         return shortReports;
+    }
+
+    public List<ReportStats> getReportStats() {
+
+        BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(ReportStats.class);
+
+        String sql ="select r.id as report_id, r.display_name, count(lri.indicator) as indicator_count " +
+                "from reports r\n" +
+                "join link_reports_indicators lri on r.id = lri.report\n" +
+                "group by (r.id)\n" +
+                "order by indicator_count desc limit 5";
+        JdbcTemplate jt = new JdbcTemplate(this.dataSource);
+        return jt.query(sql, rowMapper);
     }
 }

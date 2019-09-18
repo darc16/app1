@@ -1,6 +1,7 @@
 package com.lessons.controllers;
 
 import com.lessons.filter.FilterService;
+import com.lessons.model.ReportStats;
 import com.lessons.model.ShortReport;
 import com.lessons.services.DashboardDao;
 import com.lessons.services.ReportsDao;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,6 +60,16 @@ public class ReportsController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(shortReports);
+    }
+
+    @RequestMapping(value = "/api/reports/stats", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> getReportStats() {
+
+        List<ReportStats> stats = reportsDao.getReportStats();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(stats);
     }
 
     @RequestMapping(value = "/api/reports/filtered", method = RequestMethod.GET, produces = "application/json")
