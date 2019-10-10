@@ -1,5 +1,7 @@
 package com.lessons;
 
+import com.lessons.Utilities.SpringAppContextUtils;
+import com.lessons.services.HealthChecks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +25,13 @@ public class App
 
         // Start up Spring Boot
         SpringApplication.run(App.class, args);
+
+        HealthChecks health = (HealthChecks) SpringAppContextUtils.getBean("com.lessons.services.HealthChecks");
+
+        if (!health.doAllIndiciesExist()){
+            logger.debug("Something broke");
+            System.exit(213);
+        }
 
         logger.debug("WebApp is Up.");
     }

@@ -162,4 +162,11 @@ public class ReportsDao
         JdbcTemplate jt = new JdbcTemplate(this.dataSource);
         return jt.query(sql, rowMapper);
     }
+
+    public List<ShortReport> getAllShortReports(){
+        BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(ShortReport.class);
+        String sql ="select id, description, display_name from reports";
+        JdbcTemplate jt = new JdbcTemplate(this.dataSource);
+        return jt.query(sql, rowMapper);
+    }
 }

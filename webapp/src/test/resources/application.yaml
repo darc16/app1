@@ -16,6 +16,7 @@ app.datasource:
 
 development.mode: TrUe
 network.name: NIPR
+elasticSearch.url: http://localhost:9201
 
 
 hdfs.enabled: true
