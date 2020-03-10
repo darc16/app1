@@ -1,0 +1,78 @@
+<div class="cm-vr feature">
+
+    <header layout="row" layout-align="space-between center">
+        <!-- Page Title -->
+        <div class="md-headline"><i class="fas fa-file-alt"></i> Addd Indicator</div>
+    </header>
+<style>
+    .css_form input.ng-invalid.ng-touched{
+        border:2px solid red;
+    }
+    .css_form input.ng-valid.ng-touched{
+        border:2px solid green;
+        border-radius: 10px;
+    }
+
+</style>
+    <!-- Progress bar -->
+    <div class="progressBarWrapper">
+        <md-progress-linear ng-show="addIndicatorVM.dataIsLoading" md-mode="indeterminate"></md-progress-linear>
+    </div>
+<form name="myForm" novalidate class="css_form">
+<!--    <div layout="row">-->
+<!--    <md-input-container >-->
+<!--        <label>Report Name</label>-->
+<!--<input type="text" placeholder="Enter Name" required ng-model="addIndicatorVM.new.display_name" ng-minlength="4" name="reportName"/>-->
+<!--       <div ng-show="myForm.reportName.$touched && myForm.reportName.$error.required">-->
+<!--            You are the weakest link-->
+<!--       </div>-->
+<!--        <div ng-show="myForm.reportName.$touched && myForm.reportName.$error.minlength">-->
+<!--            You did not type enough-->
+<!--        </div>-->
+<!--    </md-input-container>-->
+<!--    </div>-->
+    <br/>
+    <div layout="row">
+    <md-input-container >
+        <label>Type</label>
+    <md-select name="indicatorType" required ng-model="addIndicatorVM.new.type">
+        <md-option ng-repeat="lookup in addIndicatorVM.indicatorTypes" ng-value="{{lookup.id}}">
+            {{lookup.name}}
+        </md-option>
+    </md-select>
+        <div ng-show="myForm.priority.$touched && myForm.priority.$error.required">
+            You are the weakest link
+        </div>
+
+    </md-input-container>
+        <md-input-container>
+            <label>Value</label>
+            <input type="text" placeholder="Email Address" required name="emailAddress" ng-model="addIndicatorVM.new.email"/>
+            <div ng-show="myForm.emailAddress.$touched && myForm.emailAddress.$error.required">
+                You are the weakest link
+            </div>
+            <div ng-show="myForm.emailAddress.$touched && myForm.emailAddress.$error.email">
+                Not a real email address
+            </div>
+        </md-input-container>
+        <md-input-container >
+            <label>Classification</label>
+            <md-select name="indicatorType"  required ng-model="addIndicatorVM.new.classification">
+                <md-option ng-repeat="lookup in addIndicatorVM.classifications" ng-value="{{lookup.id}}">
+                    {{lookup.name}}
+                </md-option>
+            </md-select>
+            <div ng-show="myForm.priority.$touched && myForm.priority.$error.required">
+                You are the weakest link
+            </div>
+
+        </md-input-container>
+
+    </div>
+    <md-button type="" class="md-primary md-raised"><md-icon class="fas fa-dog"></md-icon> Butt-on</md-button>
+
+    <md-button class="md-warn md-raised" ng-click="addIndicatorVM.reset()"><md-icon class="fas fa-cat"></md-icon> Reset</md-button>
+    <md-button class="md-accent md-raised" type="submit" ng-click="myform.$valid && addIndicatorVM.save()"><md-icon class="fas fa-cat"></md-icon> Save</md-button>
+
+</form>
+</div>

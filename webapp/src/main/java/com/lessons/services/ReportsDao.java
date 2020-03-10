@@ -2,6 +2,8 @@ package com.lessons.services;
 
 import com.lessons.filter.FilterParams;
 import com.lessons.filter.FilterService;
+import com.lessons.model.FilterDTO;
+import com.lessons.model.FilterInfo;
 import com.lessons.model.ReportStats;
 import com.lessons.model.ShortReport;
 import org.slf4j.Logger;
@@ -15,9 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.print.attribute.HashPrintJobAttributeSet;
 import javax.sql.DataSource;
-import javax.sql.RowSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -168,5 +168,31 @@ public class ReportsDao
         String sql ="select id, description, display_name from reports";
         JdbcTemplate jt = new JdbcTemplate(this.dataSource);
         return jt.query(sql, rowMapper);
+    }
+
+
+    public List<ShortReport> getSomeFilteredReports(FilterDTO filters) {
+        BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(ShortReport.class);
+
+        FilterInfo filterInfo = filterService.getSQLInfoFilters(filters);
+
+        // get sql where clause and param map for query
+//        FilterParams filterParams = filterService.getFilterParamsForFilters(filters);
+        String sql = "select id, description, display_name from reports";
+        String whereClause = "";
+        List<ShortReport> shortReports;
+
+        // if a where clause is returned add it to the sql
+        if (whereClause != null) {
+            sql = sql + " where " + whereClause;
+            NamedParameterJdbcTemplate np = new NamedParameterJdbcTemplate(this.dataSource);
+            shortReports = np.query(sql, rowMapper);
+        } else {
+            JdbcTemplate jt = new JdbcTemplate(this.dataSource);
+            shortReports = jt.query(sql, rowMapper);
+        }
+
+        // return list of ShortReport DTO objects
+        return shortReports;
     }
 }

@@ -1,14 +1,14 @@
 package com.lessons.filter;
 
-import com.sun.javafx.binding.StringFormatter;
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
+import com.lessons.model.FilterDTO;
+import com.lessons.model.FilterInfo;
+import com.lessons.model.FiltersListDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -164,5 +164,22 @@ public class FilterService {
     public String getSqlOrderByClauseForSortFields(List<String> aSortFields) {
         logger.debug("getSqlOrderByClauseForSortFields() started.");
         return null;
+    }
+
+
+    public FilterInfo getSQLInfoFilters(FilterDTO filters){
+        String limitClause = "Limit " + filters.getPageSize() +" offset " + filters.getOffset();
+        FilterInfo filterInfo = new FilterInfo();
+        filterInfo.setLimitClause(limitClause);
+        filterInfo.setWhereClause(generateWhereClause(filters.getFilters()));
+        return filterInfo;
+    }
+
+    private String generateWhereClause(List<FiltersListDTO> filtersList){
+        String whereClause = "";
+        for (FiltersListDTO filter : filtersList){
+            whereClause += filter.getFieldName() +" = " + filter.getFieldValues();
+        }
+        return whereClause;
     }
 }

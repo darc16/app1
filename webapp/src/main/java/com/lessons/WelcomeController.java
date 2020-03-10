@@ -1,4 +1,4 @@
-package com.lessons.controllers;
+package com.lessons;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ public class WelcomeController {
     /**********************************************************************
      * showDefaultPage()
      ***********************************************************************/
-    @RequestMapping("/")
+    @RequestMapping(value ={"/","/page/**"})
     public String showDefaultPage()
     {
         logger.debug("showDefaultPage() started");
